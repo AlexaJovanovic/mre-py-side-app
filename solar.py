@@ -1,3 +1,3 @@
-from municipalities_and_districts import *
+# TODO napraviti kalkulator za meru solarni paneli
 
 
