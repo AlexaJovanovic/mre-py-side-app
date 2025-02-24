@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
-
+from output_data_struct import OutputData
 
 # Dve opcije za mesto instalacije solarnih panela
 class SolarPanelLocation(Enum):
@@ -14,15 +14,6 @@ class SolarPanelsUserInput:
     electricity_price_per_kwh: float
     location: SolarPanelLocation
 
-@dataclass
-class OutputData:
-    curr_yearly_expenses: float # Estimate for the current expenses for energy
-    yearly_savings: float  # Total saved energy costs
-    payback_period: float  # Years to recover the investment
-    percantage_saved: float # What percentage of energy will be saved
-
-    saved_delivered_energy: float = -1 # VEROVTNO SE NECE KORISTITI  
-    price_for_saving_1kwh: float = -1 # VEROVTNO SE NECE KORISTITI  
 
 NOT_PROVIDED: float = -1
 
