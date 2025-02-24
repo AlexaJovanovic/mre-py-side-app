@@ -45,7 +45,7 @@ def calc_for_solar_panels(
         recommended_power_to_install: float
         
         if (user_input.location == SolarPanelLocation.ROOF):
-            recommended_power_to_install = user_input.yearly_electricity_consumption / dt.land_solar_production[my_district.value] / 1000
+            recommended_power_to_install = user_input.yearly_electricity_consumption / dt.roof_solar_production[my_district.value] / 1000
         elif (user_input.location == SolarPanelLocation.LAND):
             recommended_power_to_install = user_input.yearly_electricity_consumption / dt.land_solar_production[my_district.value] / 1000
 
