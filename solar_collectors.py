@@ -10,6 +10,12 @@ def calc_for_solar_collectors(
         power_installed: float = NOT_PROVIDED,
         ) -> OutputData:
     
+    efficency_coefficent: float = -1 # VLOOKUP(B255,B52:J59,9,FALSE)
+    needed_energy: float = -1 
+    energy_consumption_for_water_heating : float = needed_energy / efficency_coefficent
+    energy_price_per_kwh: float = -1
+    curr_yearly_expenses = energy_consumption_for_water_heating * energy_price_per_kwh
+
     if (investment_price == NOT_PROVIDED or power_installed == NOT_PROVIDED):
         # AKO SE NE SPECIFICIRA CENA IZGRADNJE I PLANIRANA SNAGA
         # ONDA NE MOGU DA SE SRACUNAJU IZLAZNI PARAMETRI
@@ -18,9 +24,9 @@ def calc_for_solar_collectors(
 
         my_district = mp.corresponding_districts[municipality.value]
         
-        recommended_power_to_install: float
+        recommended_surface_area: float = 0
         
-        print(f'Maskimalna povrsina kolektora koja treba da se ugradi da bi se pokrili troskovi tople vode je: {recommended_power_to_install}m^2')
+        print(f'Maskimalna povrsina kolektora koja treba da se ugradi da bi se pokrili troskovi tople vode je: {recommended_surface_area}m^2')
         
         return None
 
