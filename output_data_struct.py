@@ -9,3 +9,6 @@ class OutputData:
 
     saved_delivered_energy: float = -1 # VEROVTNO SE NECE KORISTITI  
     price_for_saving_1kwh: float = -1 # VEROVTNO SE NECE KORISTITI  
+
+NOT_PROVIDED: float = -1
+

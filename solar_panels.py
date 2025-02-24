@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 from output_data_struct import OutputData
+from output_data_struct import NOT_PROVIDED
 
 # Dve opcije za mesto instalacije solarnih panela
 class SolarPanelLocation(Enum):
@@ -13,8 +14,6 @@ class SolarPanelsUserInput:
     yearly_electricity_consumption: float
     electricity_price_per_kwh: float
     location: SolarPanelLocation
-
-NOT_PROVIDED: float = -1
 
 import municipalities as mp
 import districts as dt
