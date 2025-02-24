@@ -55,7 +55,7 @@ district_names = [
 	"Пчињски"
 ]
 
-roof_solar_production = [
+roof_solar_production_vals = [
 	1.175,
 	1.179,
 	1.178,
@@ -83,7 +83,7 @@ roof_solar_production = [
 	1.268
 ]
 
-land_solar_production = [
+land_solar_production_vals = [
 	1.412,
 	1.417,
 	1.416,

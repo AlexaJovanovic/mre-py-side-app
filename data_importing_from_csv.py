@@ -105,7 +105,7 @@ def create_districts_py_from_csv_data(input_csv):
     
     with open(output_file_name, "r+", encoding="utf-8") as f:
         f.seek(0, 2) # Move to the end of the file
-        f.write("\n\nroof_solar_production = [\n")
+        f.write("\n\nroof_solar_production_vals = [\n")
         
         for prod_val in solar_prod_roof:
             f.write(f'\t{prod_val},\n')
@@ -117,7 +117,7 @@ def create_districts_py_from_csv_data(input_csv):
     
     with open(output_file_name, "r+", encoding="utf-8") as f:
         f.seek(0, 2) # Move to the end of the file
-        f.write("\n\nland_solar_production = [\n")
+        f.write("\n\nland_solar_production_vals = [\n")
         
         for prod_val in solar_prod_land:
             f.write(f'\t{prod_val},\n')

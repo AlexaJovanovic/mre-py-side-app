@@ -14,7 +14,6 @@ class SolarPanelsUserInput:
     electricity_price_per_kwh: float
     location: SolarPanelLocation
 
-
 NOT_PROVIDED: float = -1
 
 import municipalities as mp
@@ -36,9 +35,9 @@ def calc_for_solar_panels(
         recommended_power_to_install: float
         
         if (user_input.location == SolarPanelLocation.ROOF):
-            recommended_power_to_install = user_input.yearly_electricity_consumption / dt.roof_solar_production[my_district.value] / 1000
+            recommended_power_to_install = user_input.yearly_electricity_consumption / dt.roof_solar_production_vals[my_district.value] / 1000
         elif (user_input.location == SolarPanelLocation.LAND):
-            recommended_power_to_install = user_input.yearly_electricity_consumption / dt.land_solar_production[my_district.value] / 1000
+            recommended_power_to_install = user_input.yearly_electricity_consumption / dt.land_solar_production_vals[my_district.value] / 1000
 
         print(f'Maskimalna snaga koja treba da se ugradi da bi se pokrili svi troskovi je: {recommended_power_to_install}kWp')
         
@@ -47,7 +46,7 @@ def calc_for_solar_panels(
     curr_yearly_expenses = user_input.yearly_electricity_consumption * user_input.electricity_price_per_kwh
     
     my_district = mp.corresponding_districts[municipality.value]
-    my_yearly_production : float = power_installed * dt.land_solar_production[my_district.value] * 1000
+    my_yearly_production : float = power_installed * dt.land_solar_production_vals[my_district.value] * 1000
     
     percantage_saved = my_yearly_production / user_input.yearly_electricity_consumption * 100
     yearly_savings = my_yearly_production * user_input.electricity_price_per_kwh
