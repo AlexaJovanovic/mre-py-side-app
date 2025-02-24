@@ -2,6 +2,18 @@ from output_data_struct import OutputData
 from output_data_struct import NOT_PROVIDED
 import municipalities as mp
 
+WATER_DENSITY: float = 985 # kg/m^3 at temp
+WATER_HEAT_CAPACITY: float = 4.2 # kJ/(kg*K)
+SUPPLY_WATER_TEMP: float = 10 # deg C
+DESIRED_WATER_TEMP: float = 35 # deg C
+NEEDED_WARM_WATER_VOLUME: float = 30 # liters per day per person
+
+# calc for one person
+needed_energy_in_kJ = (NEEDED_WARM_WATER_VOLUME / 1000)*WATER_DENSITY*WATER_HEAT_CAPACITY*(DESIRED_WATER_TEMP - SUPPLY_WATER_TEMP)
+needed_energy_in_kWh = needed_energy_in_kJ / 3600
+num_of_persons = 4
+num_of_days = 31
+print(needed_energy_in_kWh*num_of_persons*num_of_days)
 
 
 def calc_for_solar_collectors(
@@ -10,10 +22,13 @@ def calc_for_solar_collectors(
         power_installed: float = NOT_PROVIDED,
         ) -> OutputData:
     
+    # UNOS!K21 JE TRUE AKO SE PRIMENJUJE MERA KOLEKTORA
+    
     efficency_coefficent: float = -1 # VLOOKUP(B255,B52:J59,9,FALSE)
-    needed_energy: float = -1 
+    needed_energy: float = 0 # racuna se kao suma po svim mesecima
     energy_consumption_for_water_heating : float = needed_energy / efficency_coefficent
     energy_price_per_kwh: float = -1
+    
     curr_yearly_expenses = energy_consumption_for_water_heating * energy_price_per_kwh
 
     if (investment_price == NOT_PROVIDED or power_installed == NOT_PROVIDED):
