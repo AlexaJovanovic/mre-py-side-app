@@ -61,6 +61,8 @@ user_data = SolarPanelsUserInput(
     location=SolarPanelLocation.LAND
 )
 
+
+# TESTING
 print(user_data)
 
 output = calc_for_solar_panels(municipality=mp.SrbMunicipalities.ALIBUNAR, user_input=user_data)
