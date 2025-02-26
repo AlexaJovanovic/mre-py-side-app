@@ -15,7 +15,7 @@ class SolarPanelsUserInput:
     electricity_price_per_kwh: float
     location: SolarPanelLocation
 
-import municipalities as mp
+import municipality_collection.municipalities as mp
 import districts as dt
 
 def calc_for_solar_panels(
