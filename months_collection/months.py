@@ -1,5 +1,15 @@
 from enum import Enum
 import pandas as pd
+from dataclasses import dataclass
+
+
+@dataclass
+class MonthModel:
+    name_latin: str
+    name_cyrillic: str
+    number_of_days: int
+    avg_production_kWh_m2: float
+
 
 class Months(Enum):
 	JANUAR = 0
@@ -21,14 +31,16 @@ days_column = 'number_of_days'
 cyrilic_names_column = 'name_cyrillic'
 average_energy_column = 'avg_production_kWh_m2'
 
-print(months_df.head())
 
-def get_number_of_days_in_a_month(month: Months) -> int:
-    return months_df[days_column][month.value]
+# BACKEND -> DB (csv file) API
 
-def get_months_name_cyrilic(month: Months) -> str:
-    return months_df[cyrilic_names_column][month.value]
+def db_get_all() -> list[MonthModel]:
+    
+	# TODO
 
-def get_average_energy_from_sun_per_m2_in_month(month: Months) -> str:
-    return months_df[average_energy_column][month.value]
+	return []
 
+# FRONTEND -> BECKEND API
+
+def be_get_all() -> list[MonthModel]:
+    return db_get_all()
