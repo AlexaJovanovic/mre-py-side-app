@@ -15,11 +15,13 @@ class Months(Enum):
 	NOVEMBAR = 10
 	DECEMBAR = 11
 
-months_df: pd.DataFrame = pd.read_csv("months.csv")
+months_df: pd.DataFrame = pd.read_csv("months_collection/months.csv")
 
 days_column = 'broj dana'
 cyrilic_names_column = 'cirilica'
 average_energy_column = 'prosek(kWh/m2)'
+
+print(months_df.head())
 
 def get_number_of_days_in_a_month(month: Months) -> int:
     return months_df[days_column][month.value]
