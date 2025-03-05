@@ -35,10 +35,15 @@ average_energy_column = 'avg_production_kWh_m2'
 # BACKEND -> DB (csv file) API
 
 def db_get_all() -> list[MonthModel]:
+	months: list[MonthModel] = []
     
-	# TODO
+	for m in Months:
+		row = months_df[m.value]
+		model = MonthModel(row['name_latin'], row['name_cyrillic'], row['number_of_days'], row['avg_production_kWh_m2'])
+		
+		months.append(model)
 
-	return []
+	return months
 
 # FRONTEND -> BECKEND API
 
