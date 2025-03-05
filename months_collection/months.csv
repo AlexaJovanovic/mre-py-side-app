@@ -1,4 +1,4 @@
-﻿meseci,cirilica,broj dana,HOR (kWh/m2),J(kWh/m2),"I, Z (kWh/m2)",S(kWh/m2),prosek(kWh/m2)
+﻿name_latin,name_cyrillic,number_of_days,prouction_hor_kWh_m2,production_south_kWh_m2,production_e_w_kWh_m2,production_north_kWh_m2,avg_production_kWh_m2
 Januar,Јануар,31,42.75,64.25,32.57,17.42,39.2475
 Februar,Фебруар,28,60.35,76.98,55.35,22.38,53.765
 Mart,Март,31,103.86,96.43,79.8,36.04,79.0325

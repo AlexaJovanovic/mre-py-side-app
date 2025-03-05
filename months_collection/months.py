@@ -17,9 +17,9 @@ class Months(Enum):
 
 months_df: pd.DataFrame = pd.read_csv("months_collection/months.csv")
 
-days_column = 'broj dana'
-cyrilic_names_column = 'cirilica'
-average_energy_column = 'prosek(kWh/m2)'
+days_column = 'number_of_days'
+cyrilic_names_column = 'name_cyrillic'
+average_energy_column = 'avg_production_kWh_m2'
 
 print(months_df.head())
 
