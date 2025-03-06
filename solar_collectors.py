@@ -1,6 +1,6 @@
 from output_data_struct import OutputData
 from output_data_struct import NOT_PROVIDED
-import municipality_collection.municipalities as mp
+import municipalities_collection.municipalities as mp
 
 WATER_DENSITY: float = 985 # kg/m^3 at temp
 WATER_HEAT_CAPACITY: float = 4.2 # kJ/(kg*K)
