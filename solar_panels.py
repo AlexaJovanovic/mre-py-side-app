@@ -16,7 +16,7 @@ class SolarPanelsUserInput:
     location: SolarPanelLocation
 
 import municipality_collection.municipalities as mp
-import districts as dt
+import districts_collection.districts as dt
 
 def calc_for_solar_panels(
         municipality: mp.SrbMunicipalities,

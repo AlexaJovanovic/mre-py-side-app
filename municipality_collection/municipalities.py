@@ -1,6 +1,6 @@
 from enum import Enum
 
-from districts import *
+from districts_collection.districts import *
 
 class SrbMunicipalities(Enum):
 	ADA = 0
