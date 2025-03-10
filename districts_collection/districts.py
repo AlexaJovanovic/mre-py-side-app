@@ -1,4 +1,13 @@
 from enum import Enum
+import pandas as pd
+from dataclasses import dataclass
+
+@dataclass
+class DistrictModel:
+    name_latin: str
+    name_cyrillic: str
+    roof_production_MWh_MWp: float
+    land_production_MWh_MWp: float
 
 class SrbDistricts(Enum):
 	ZAPADNOBACKI = 0
@@ -27,86 +36,36 @@ class SrbDistricts(Enum):
 	PIROTSKI = 23
 	PCINJSKI = 24
 
-district_names = [
-	"Западнобачки",
-	"Севернобачки",
-	"Севернобанатски",
-	"Јужнобачки",
-	"Средњeбанатски",
-	"Сремски",
-	"Јужнобанатски",
-	"Мачвански",
-	"Београдски",
-	"Колубарски",
-	"Подунавски",
-	"Браничевски",
-	"Златиборски",
-	"Моравички",
-	"Шумадијски",
-	"Поморавски",
-	"Борски",
-	"Рашки",
-	"Расински",
-	"Нишавски",
-	"Зајечарски",
-	"Топлички",
-	"Јабланички",
-	"Пиротски",
-	"Пчињски"
-]
 
-roof_solar_production_vals = [
-	1.175,
-	1.179,
-	1.178,
-	1.184,
-	1.185,
-	1.177,
-	1.187,
-	1.169,
-	1.186,
-	1.162,
-	1.178,
-	1.183,
-	1.228,
-	1.178,
-	1.182,
-	1.187,
-	1.227,
-	1.196,
-	1.188,
-	1.224,
-	1.247,
-	1.231,
-	1.22,
-	1.248,
-	1.268
-]
+districts_df: pd.DataFrame = pd.read_csv("districts_collection/okruzi.csv")
 
-land_solar_production_vals = [
-	1.412,
-	1.417,
-	1.416,
-	1.423,
-	1.424,
-	1.413,
-	1.426,
-	1.399,
-	1.418,
-	1.416,
-	1.402,
-	1.423,
-	1.459,
-	1.411,
-	1.415,
-	1.426,
-	1.483,
-	1.412,
-	1.408,
-	1.472,
-	1.479,
-	1.469,
-	1.473,
-	1.494,
-	1.526
-]
+# BACKEND -> DB (csv file) API
+
+def __db_get_all() -> list[DistrictModel]:
+	districts: list[DistrictModel] = []
+	
+	for _, row in districts_df.iterrows():
+		d_model: DistrictModel = DistrictModel(
+			row['name_latin'],
+			row['name_cyrillic'],
+			row['roof_production_MWh_MWp'],
+			row['land_production_MWh_MWp']
+		)
+		
+		districts.append(d_model)
+
+	return districts
+
+# FRONTEND -> BECKEND API
+
+def be_get_all() -> list[DistrictModel]:	
+    return __db_get_all()
+
+def test():
+	d_list = be_get_all()
+
+	for d in d_list:
+		print(d)
+
+if __name__ == '__main__':
+	test()
