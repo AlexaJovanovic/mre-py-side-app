@@ -56,16 +56,64 @@ def __db_get_all() -> list[DistrictModel]:
 
 	return districts
 
+def __db_get_by_name_lat(district_name_lat: str) -> DistrictModel:
+	row = districts_df[districts_df['name_latin'] == district_name_lat]
+	
+	if row.empty:
+		return None
+	
+	row = row.iloc[0]
+	d_model: DistrictModel = DistrictModel(
+			row['name_latin'],
+			row['name_cyrillic'],
+			float(row['roof_production_MWh_MWp']),
+			float(row['land_production_MWh_MWp'])
+		)
+	
+	return d_model
+
+def __db_get_by_name_cyr(district_name_cyr: str) -> DistrictModel:
+	row = districts_df[districts_df['name_cyrillic'] == district_name_cyr]
+	
+	if row.empty:
+		return None
+	
+	row = row.iloc[0]
+	d_model: DistrictModel = DistrictModel(
+			row['name_latin'],
+			row['name_cyrillic'],
+			float(row['roof_production_MWh_MWp']),
+			float(row['land_production_MWh_MWp'])
+		)
+	
+	return d_model
+
+
 # FRONTEND -> BECKEND API
 
 def be_get_all() -> list[DistrictModel]:	
     return __db_get_all()
+
+def be_get_by_name_lat(district_name_lat: str) -> DistrictModel:
+	return __db_get_by_name_lat(district_name_lat)
+
+def be_get_by_name_cyr(district_name_cyr: str) -> DistrictModel:
+	return __db_get_by_name_cyr(district_name_cyr)
 
 def test():
 	d_list = be_get_all()
 
 	for d in d_list:
 		print(d)
+
+	d = d_list[4]
+
+	print(f'Searching for {d.name_latin}:{d.name_cyrillic}')
+
+	dd = be_get_by_name_lat(d.name_latin)
+	print(dd)
+	dd = be_get_by_name_lat('Nonexistant')
+	print(dd)
 
 if __name__ == '__main__':
 	test()
