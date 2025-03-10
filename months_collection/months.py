@@ -1,7 +1,7 @@
 from enum import Enum
 import pandas as pd
 from dataclasses import dataclass
-
+from districts_collection import districts
 
 @dataclass
 class MonthModel:
@@ -55,3 +55,6 @@ def test():
 
 	for m in m_list:
 		print(m)
+
+if __name__ == '__main__':
+	test()
