@@ -159,3 +159,84 @@ class SrbMunicipalities(Enum):
 	SID = 145
 
 municipalities_df: pd.DataFrame = pd.read_csv("municipalities_collection/Opstine.csv")
+
+# BACKEND -> DB (csv file) API
+
+def __db_get_all() -> list[MunicipalityModel]:
+	districts: list[MunicipalityModel] = []
+	
+	for _, row in municipalities_df.iterrows():
+		d_model: MunicipalityModel = MunicipalityModel(
+			row['name_latin'],
+			row['name_cyrillic'],
+			row['HDD'],
+			row['district_latin'],
+			row['district_cyrillic']
+		)
+		
+		districts.append(d_model)
+
+	return districts
+
+def __db_get_by_name_lat(district_name_lat: str) -> MunicipalityModel:
+	row = municipalities_df[municipalities_df['name_latin'] == district_name_lat]
+	
+	if row.empty:
+		return None
+	
+	row = row.iloc[0]
+	d_model: MunicipalityModel = MunicipalityModel(
+			row['name_latin'],
+			row['name_cyrillic'],
+			float(row['HDD']),
+			row['district_latin'],
+			row['district_cyrillic']
+		)
+	
+	return d_model
+
+def __db_get_by_name_cyr(district_name_cyr: str) -> MunicipalityModel:
+	row = municipalities_df[municipalities_df['name_cyrillic'] == district_name_cyr]
+	
+	if row.empty:
+		return None
+	
+	row = row.iloc[0]
+	d_model: MunicipalityModel = MunicipalityModel(
+			row['name_latin'],
+			row['name_cyrillic'],
+			float(row['HDD']),
+			row['district_latin'],
+			row['district_cyrillic']
+		)
+	
+	return d_model
+
+# FRONTEND -> BECKEND API
+
+def be_get_all() -> list[MunicipalityModel]:	
+    return __db_get_all()
+
+def be_get_by_name_lat(district_name_lat: str) -> MunicipalityModel:
+	return __db_get_by_name_lat(district_name_lat)
+
+def be_get_by_name_cyr(district_name_cyr: str) -> MunicipalityModel:
+	return __db_get_by_name_cyr(district_name_cyr)
+
+def test():
+	m_list = be_get_all()
+
+	for m in m_list:
+		print(m)
+
+	d = m_list[4]
+
+	print(f'Searching for {m.name_latin}:{m.name_cyrillic}')
+
+	mm = be_get_by_name_lat(m.name_latin)
+	print(mm)
+	mm = be_get_by_name_lat('Nonexistant')
+	print(mm)
+
+if __name__ == '__main__':
+	test()
