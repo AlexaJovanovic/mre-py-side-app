@@ -1,6 +1,14 @@
 from enum import Enum
+import pandas as pd
+from dataclasses import dataclass
 
-from districts_collection.districts import *
+@dataclass
+class MunicipalityModel:
+    name_latin: str
+    name_cyrillic: str
+    HDD: float
+    district_latin: str
+    district_cyrillic: str
 
 class SrbMunicipalities(Enum):
 	ADA = 0
@@ -150,4 +158,4 @@ class SrbMunicipalities(Enum):
 	SABAC = 144
 	SID = 145
 
-
+municipalities_df: pd.DataFrame = pd.read_csv("municipalities_collection/Opstine.csv")
