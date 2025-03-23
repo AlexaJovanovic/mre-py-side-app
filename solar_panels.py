@@ -28,6 +28,22 @@ def calculate_recommended_power_to_install(
 
     return recommended_power_to_install_kWp
 
+def calculation_for_solar_panels(
+        yearly_electricity_consumption_kWh: float, 
+        electricity_price_per_kWh: float,
+        investment_price: float, 
+        power_installed_kWp: float,
+        el_production_MWh_kWp: float
+        ) -> OutputData:
+
+    curr_yearly_expenses: float = yearly_electricity_consumption_kWh * electricity_price_per_kWh
+    my_yearly_production_kWh : float = power_installed_kWp * el_production_MWh_kWp * 1000
+
+    percantage_saved: float = my_yearly_production_kWh / yearly_electricity_consumption_kWh * 100
+    yearly_savings: float = my_yearly_production_kWh * electricity_price_per_kWh
+    payback_period = investment_price / yearly_savings
+
+    return OutputData(curr_yearly_expenses, yearly_savings, payback_period, percantage_saved)
 
 def calc_for_solar_panels(
         municipality: mp.SrbMunicipalities,
