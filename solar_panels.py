@@ -18,6 +18,17 @@ class SolarPanelsUserInput:
 import municipalities_collection.municipalities as mp
 import districts_collection.districts as dt
 
+def calculate_recommended_power_to_install(
+        yearly_electricity_consumption_kWh: float,
+        el_production_MWh_kWp: float
+        ) -> float:
+    recommended_power_to_install_kWp: float
+    
+    recommended_power_to_install_kWp = yearly_electricity_consumption_kWh / 1000 / el_production_MWh_kWp
+
+    return recommended_power_to_install_kWp
+
+
 def calc_for_solar_panels(
         municipality: mp.SrbMunicipalities,
         user_input: SolarPanelsUserInput, 
