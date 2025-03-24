@@ -85,19 +85,24 @@ def calc_for_solar_panels(
     payback_period = investment_price / yearly_savings
 
     return OutputData(curr_yearly_expenses, yearly_savings, payback_period, percantage_saved)
-    
-# Example Usage
-user_data = SolarPanelsUserInput(
-    yearly_electricity_consumption=7000.0,
-    electricity_price_per_kwh=10,
-    location=SolarPanelLocation.LAND
-)
 
 
-# TESTING
-print(user_data)
+def test():
+    # Example Usage
+    user_data = SolarPanelsUserInput(
+        yearly_electricity_consumption=7000.0,
+        electricity_price_per_kwh=10,
+        location=SolarPanelLocation.LAND
+    )
 
-output = calc_for_solar_panels(municipality=mp.SrbMunicipalities.ALIBUNAR, user_input=user_data)
 
-output = calc_for_solar_panels(municipality=mp.SrbMunicipalities.ALIBUNAR, user_input=user_data, investment_price=200_000.0, power_installed=4)
-print("\nRacunca:\n", output)
+    # TESTING
+    print(user_data)
+
+    output = calc_for_solar_panels(municipality=mp.SrbMunicipalities.ALIBUNAR, user_input=user_data)
+
+    output = calc_for_solar_panels(municipality=mp.SrbMunicipalities.ALIBUNAR, user_input=user_data, investment_price=200_000.0, power_installed=4)
+    print("\nRacunca:\n", output)
+
+if __name__ == '__main__':
+	test()
