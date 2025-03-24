@@ -1,6 +1,11 @@
 from dataclasses import dataclass
 
 @dataclass
+class GeneralInputData:
+    municipality_name_lat: str
+    
+        
+@dataclass
 class OutputData:
     curr_yearly_expenses: float # Estimate for the current expenses for energy
     yearly_savings: float  # Total saved energy costs
