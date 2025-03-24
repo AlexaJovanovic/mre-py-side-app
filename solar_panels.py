@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
-from output_data_struct import OutputData
-from output_data_struct import NOT_PROVIDED
+from general_data_structs import OutputData
+from general_data_structs import NOT_PROVIDED
 
 # Dve opcije za mesto instalacije solarnih panela
 class SolarPanelLocation(Enum):
