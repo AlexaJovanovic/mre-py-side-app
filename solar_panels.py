@@ -11,9 +11,11 @@ class SolarPanelLocation(Enum):
 # Informacije koje se dodatno unose za meru solarnih panela 
 @dataclass
 class SolarPanelsUserInput:
+    investment_price: float
     yearly_electricity_consumption: float
     electricity_price_per_kwh: float
     location: SolarPanelLocation
+    installed_power_kWp: float
 
 import municipalities_collection.municipalities as mp
 import districts_collection.districts as dt
