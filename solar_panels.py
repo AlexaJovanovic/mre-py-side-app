@@ -28,6 +28,10 @@ def calculate_recommended_power_to_install(
 
     return recommended_power_to_install_kWp
 
+def calculate_yeraly_production_in_kWh(power_installed_kWp: float, el_production_MWh_kWp: float) -> float:
+    yearly_production_kWh : float = power_installed_kWp * el_production_MWh_kWp * 1000
+    return yearly_production_kWh
+    
 def calculation_for_solar_panels(
         yearly_electricity_consumption_kWh: float, 
         electricity_price_per_kWh: float,
@@ -37,7 +41,7 @@ def calculation_for_solar_panels(
         ) -> OutputData:
 
     curr_yearly_expenses: float = yearly_electricity_consumption_kWh * electricity_price_per_kWh
-    my_yearly_production_kWh : float = power_installed_kWp * el_production_MWh_kWp * 1000
+    my_yearly_production_kWh : float = calculate_yeraly_production_in_kWh(power_installed_kWp, el_production_MWh_kWp)
 
     percantage_saved: float = my_yearly_production_kWh / yearly_electricity_consumption_kWh * 100
     yearly_savings: float = my_yearly_production_kWh * electricity_price_per_kWh
