@@ -36,11 +36,11 @@ def calculate_needed_energy_for_period_kWh(num_of_days: float, num_of_persons: f
     
     return Q_nd
 
-def calculate_captured_heat_for_period_kWh(sun_energy_kWh_m2: float,
+def calculate_monthly_captured_heat_kWh(monthly_sun_energy_kWh_m2: float,
                                              collector_surface_area_m2: float,
                                              collector_efficency: float) -> float:
     
-    captured_heat_kWh: float = sun_energy_kWh_m2 * collector_surface_area_m2 * collector_efficency
+    captured_heat_kWh: float = monthly_sun_energy_kWh_m2 * collector_surface_area_m2 * collector_efficency
     
     return captured_heat_kWh
 
