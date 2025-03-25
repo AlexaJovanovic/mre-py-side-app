@@ -1,5 +1,6 @@
 from general_data_structs import OutputData
 from general_data_structs import NOT_PROVIDED
+from general_data_structs import GeneralInputData
 import municipalities_collection.municipalities as mp
 from dataclasses import dataclass
 
@@ -8,7 +9,21 @@ WATER_DENSITY: float = 985 # kg/m^3 at temp
 WATER_HEAT_CAPACITY: float = 4.2 # kJ/(kg*K)
 SUPPLY_WATER_TEMP: float = 10 # deg C
 DESIRED_WATER_TEMP: float = 35 # deg C
-NEEDED_WARM_WATER_VOLUME: float = 30 # liters per day per person
+NEEDED_WARM_WATER_VOLUME_L: float = 30 # liters per day per person
+
+# calc needed energy for one person
+NEEDED_ENERGY_PER_PERSON_IN_KJ: float = (NEEDED_WARM_WATER_VOLUME_L / 1000)*WATER_DENSITY*WATER_HEAT_CAPACITY*(DESIRED_WATER_TEMP - SUPPLY_WATER_TEMP)
+NEEDED_ENERGY_PER_PERSON_IN_KWH = NEEDED_ENERGY_PER_PERSON_IN_KJ / 3600
+
+num_of_persons = 4
+num_of_days = 31
+print(NEEDED_ENERGY_PER_PERSON_IN_KWH*num_of_persons*num_of_days)
+
+# calc for produced energy
+solar_power_base_on_month: float = 39 # kWh/m^2 per day CITA SE IZ TABELE O MESECIMA
+solar_collector_surface_area: float = 2 # m^2 USER INPUT
+collector_efficeny: float = 0.6 # USER INPUT
+produced_heat = solar_power_base_on_month * solar_collector_surface_area * collector_efficeny
 
 # Informacije koje se dodatno unose za meru solarnih panela 
 @dataclass
@@ -20,25 +35,7 @@ class SolarCollectorsUserInput:
     collector_surface_area_m2: float
     collector_efficeny: float
 
-# calc needed energy for one person
-needed_energy_in_kJ = (NEEDED_WARM_WATER_VOLUME / 1000)*WATER_DENSITY*WATER_HEAT_CAPACITY*(DESIRED_WATER_TEMP - SUPPLY_WATER_TEMP)
-needed_energy_in_kWh = needed_energy_in_kJ / 3600
-num_of_persons = 4
-num_of_days = 31
-print(needed_energy_in_kWh*num_of_persons*num_of_days)
-
-# calc for produced energy
-solar_power_base_on_month: float = 39 # kWh/m^2 per day CITA SE IZ TABELE O MESECIMA
-solar_collector_surface_area: float = 2 # m^2 USER INPUT
-collector_efficeny: float = 0.6 # USER INPUT
-produced_heat = solar_power_base_on_month * solar_collector_surface_area * collector_efficeny
-
-
-def calc_for_solar_collectors(
-        municipality: mp.SrbMunicipalities,
-        investment_price: float = NOT_PROVIDED, 
-        power_installed: float = NOT_PROVIDED,
-        ) -> OutputData:
+def fetch_data_and_calculate(general_input: GeneralInputData, solar_input: SolarCollectorsUserInput) -> OutputData:
     
     # UNOS!K21 JE TRUE AKO SE PRIMENJUJE MERA KOLEKTORA
     
