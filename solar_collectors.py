@@ -15,10 +15,6 @@ NEEDED_WARM_WATER_VOLUME_L: float = 30 # liters per day per person
 NEEDED_ENERGY_PER_PERSON_IN_KJ: float = (NEEDED_WARM_WATER_VOLUME_L / 1000)*WATER_DENSITY*WATER_HEAT_CAPACITY*(DESIRED_WATER_TEMP - SUPPLY_WATER_TEMP)
 NEEDED_ENERGY_PER_PERSON_IN_KWH = NEEDED_ENERGY_PER_PERSON_IN_KJ / 3600
 
-num_of_persons = 4
-num_of_days = 31
-print(NEEDED_ENERGY_PER_PERSON_IN_KWH*num_of_persons*num_of_days)
-
 # calc for produced energy
 solar_power_base_on_month: float = 39 # kWh/m^2 per day CITA SE IZ TABELE O MESECIMA
 solar_collector_surface_area: float = 2 # m^2 USER INPUT
@@ -34,6 +30,12 @@ class SolarCollectorsUserInput:
     number_of_people: int
     collector_surface_area_m2: float
     collector_efficeny: float
+
+def calculate_needed_energy_for_period_kWh(num_of_days: float, num_of_persons: float, ) -> float:
+    Q_nd: float = NEEDED_ENERGY_PER_PERSON_IN_KWH * num_of_days * num_of_persons
+    
+    return Q_nd
+
 
 def fetch_data_and_calculate(general_input: GeneralInputData, solar_input: SolarCollectorsUserInput) -> OutputData:
     
