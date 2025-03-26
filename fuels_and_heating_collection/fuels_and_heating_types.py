@@ -18,6 +18,17 @@ def __db_get_all_fuel_types_cyr() -> list[str]:
 
 	return fuel_types_cyr
 
+def __db_get_all_heating_types_lat() -> list[str]:
+	fuel_types_lat: list[str] = heating_types_df['heating_type_latin'].tolist()
+	
+	return fuel_types_lat
+
+def __db_get_all_heating_types_cyr() -> list[str]:
+	fuel_types_cyr: list[str] = heating_types_df['heating_type_cyrillic'].tolist()
+
+	return fuel_types_cyr
+
+
 # FRONTEND -> BECKEND API
 
 def be_get_all_fuel_types_lat() -> list[str]:	
@@ -26,4 +37,12 @@ def be_get_all_fuel_types_lat() -> list[str]:
 
 def be_get_all_fuel_types_cyr() -> list[str]:	
     return __db_get_all_fuel_types_cyr()
+
+
+def be_get_all_heating_types_lat() -> list[str]:	
+    return __db_get_all_heating_types_lat()
+
+
+def be_get_all_heating_types_cyr() -> list[str]:	
+    return __db_get_all_heating_types_cyr()
 
