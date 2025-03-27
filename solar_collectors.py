@@ -11,17 +11,11 @@ SUPPLY_WATER_TEMP: float = 10 # deg C
 DESIRED_WATER_TEMP: float = 35 # deg C
 NEEDED_WARM_WATER_VOLUME_L: float = 30 # liters per day per person
 
-# calc needed energy for one person
+# constant needed energy for one person for one day
 NEEDED_ENERGY_PER_PERSON_IN_KJ: float = (NEEDED_WARM_WATER_VOLUME_L / 1000)*WATER_DENSITY*WATER_HEAT_CAPACITY*(DESIRED_WATER_TEMP - SUPPLY_WATER_TEMP)
 NEEDED_ENERGY_PER_PERSON_IN_KWH = NEEDED_ENERGY_PER_PERSON_IN_KJ / 3600
 
-# calc for produced energy
-solar_power_base_on_month: float = 39 # kWh/m^2 per day CITA SE IZ TABELE O MESECIMA
-solar_collector_surface_area: float = 2 # m^2 USER INPUT
-collector_efficeny: float = 0.6 # USER INPUT
-produced_heat = solar_power_base_on_month * solar_collector_surface_area * collector_efficeny
-
-# Informacije koje se dodatno unose za meru solarnih panela 
+# Informacije koje se dodatno unose za meru solarnih kolektora 
 @dataclass
 class SolarCollectorsUserInput:
     investment_price: float
@@ -31,7 +25,7 @@ class SolarCollectorsUserInput:
     collector_surface_area_m2: float
     collector_efficeny: float
 
-def calculate_needed_energy_for_period_kWh(num_of_days: float, num_of_persons: float, ) -> float:
+def calculate_needed_energy_for_period_kWh(num_of_days: float, num_of_persons: float) -> float:
     Q_nd: float = NEEDED_ENERGY_PER_PERSON_IN_KWH * num_of_days * num_of_persons
     
     return Q_nd
@@ -44,9 +38,11 @@ def calculate_monthly_captured_heat_kWh(monthly_sun_energy_kWh_m2: float,
     
     return captured_heat_kWh
 
+from months_collection import months
+
 def fetch_data_and_calculate(general_input: GeneralInputData, solar_input: SolarCollectorsUserInput) -> OutputData:
-    
-    # UNOS!K21 JE TRUE AKO SE PRIMENJUJE MERA KOLEKTORA
+
+    month_models: list[months.MonthModel] = months.be_get_all()
     
     efficency_coefficent: float = -1 # VLOOKUP(B255,B52:J59,9,FALSE)
     needed_energy: float = 0 # racuna se kao suma po svim mesecima
@@ -54,20 +50,6 @@ def fetch_data_and_calculate(general_input: GeneralInputData, solar_input: Solar
     energy_price_per_kwh: float = -1
     
     curr_yearly_expenses = energy_consumption_for_water_heating * energy_price_per_kwh
-
-    if (investment_price == NOT_PROVIDED or power_installed == NOT_PROVIDED):
-        # AKO SE NE SPECIFICIRA CENA IZGRADNJE I PLANIRANA SNAGA
-        # ONDA NE MOGU DA SE SRACUNAJU IZLAZNI PARAMETRI
-        # ALI MOZE DA SE PREPORUCI POVRSINA KOLEKTORA KOJA BI ZADOVOLJILA 
-        # 100% POTREBA ZA TOPLOM VODOM
-
-        my_district = mp.corresponding_districts[municipality.value]
-        
-        recommended_surface_area: float = 0
-        
-        print(f'Maskimalna povrsina kolektora koja treba da se ugradi da bi se pokrili troskovi tople vode je: {recommended_surface_area}m^2')
-        
-        return None
 
     return OutputData(NOT_PROVIDED, NOT_PROVIDED, NOT_PROVIDED, NOT_PROVIDED)
     
