@@ -74,7 +74,7 @@ def fetch_data_and_calculate(general_input: GeneralInputData, solar_input: Solar
 
 def test():
     # Example Usage
-    general_input: GeneralInputData = GeneralInputData(municipality_name_lat="Aleksandrovac")
+    general_input: GeneralInputData = GeneralInputData(municipality_name_lat="Aleksandrovac", heating_type_lat=None)
     solar_user_input: SolarPanelsUserInput = SolarPanelsUserInput(
         investment_price=600000,
         yearly_electricity_consumption=8000.0,
