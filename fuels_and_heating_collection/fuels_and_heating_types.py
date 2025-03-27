@@ -51,7 +51,7 @@ def __db_get_coefficents(fuel_type_cyr: str, heating_type_cyr: str) -> Coefficie
     return CoefficientsModel(
         fuel_efficency=float(coeffs["fuel_efficency"]),
         pipe_system_efficency=float(coeffs["pipe_system_efficency"]),
-        regulation_efficency=float(coeffs["pipe_system_efficency"])
+        regulation_efficency=float(coeffs["regulation_efficency"])
     )
 
 def __db_get_fuel_lat(fuel_type_lat: str) -> FuelModel:
