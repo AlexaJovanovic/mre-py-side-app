@@ -1,5 +1,5 @@
 ﻿fuel_type_latin,fuel_type_cyrillic,prim_en_conv_factor,co2_emission_kg_per_kWh,unit,energy_density_kJ_per_unit,consumtion_per_kWh
-drvo,дрво,1,0,m3,8445600,0.00043
+drvo,дрво,1,0,m3,8445600,0.0004262574595
 ugalj,угаљ,1,0.35,t,17886000,0
 tečno gorivo,течно гориво,1,0.28,kg,41200,0.087
 električna energija,електрична енергија,3.015,0.365,kWh,1,1
