@@ -68,4 +68,22 @@ def fetch_data_and_calculate(general_input: GeneralInputData, solar_input: Solar
     curr_yearly_expenses = energy_consumption_for_water_heating * energy_price_per_kwh
 
     return OutputData(NOT_PROVIDED, NOT_PROVIDED, NOT_PROVIDED, NOT_PROVIDED)
-    
+
+
+def test():
+    # Example Usage
+    general_input: GeneralInputData = GeneralInputData(municipality_name_lat="Aleksandrovac", heating_type_lat="etažno")
+    collector_user_input: SolarCollectorsUserInput = SolarCollectorsUserInput(
+        investment_price = 100000,
+        water_heating_source = 'drvo',
+        energy_source_price_per_unit = 8000,
+        number_of_people = 5,
+        collector_surface_area_m2 = 2,
+        collector_efficeny = 0.6
+    )
+
+    output: OutputData = fetch_data_and_calculate(general_input, collector_user_input)
+    print(output)
+
+if __name__ == '__main__':
+	test()
