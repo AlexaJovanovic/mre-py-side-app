@@ -3,6 +3,7 @@ from dataclasses import dataclass
 @dataclass
 class GeneralInputData:
     municipality_name_lat: str
+    heating_type_lat: str
     
         
 @dataclass
