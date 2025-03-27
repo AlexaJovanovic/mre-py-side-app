@@ -44,9 +44,25 @@ def fetch_data_and_calculate(general_input: GeneralInputData, solar_input: Solar
 
     month_models: list[months.MonthModel] = months.be_get_all()
     
-    efficency_coefficent: float = -1 # VLOOKUP(B255,B52:J59,9,FALSE)
+    Q_nd: float = 0
+    total_collector_production: float = 0
+
+    for month_model in month_models:
+        # monthly calculations of needed energy and achieved production
+        needed_production = calculate_needed_energy_for_period_kWh(month_model.number_of_days, solar_input.number_of_people)
+        collector_production = calculate_monthly_captured_heat_kWh(month_model.avg_production_kWh_m2,
+                                                                   solar_input.collector_surface_area_m2,
+                                                                   solar_input.collector_efficeny)
+        if (collector_production > needed_production):
+            collector_production = needed_production
+        
+        Q_nd = Q_nd + needed_production
+        total_collector_production = total_collector_production + collector_production
+
+
+    curr_system_efficency_coef: float = -1 # VLOOKUP(B255,B52:J59,9,FALSE)
     needed_energy: float = 0 # racuna se kao suma po svim mesecima
-    energy_consumption_for_water_heating : float = needed_energy / efficency_coefficent
+    energy_consumption_for_water_heating : float = needed_energy / curr_system_efficency_coef
     energy_price_per_kwh: float = -1
     
     curr_yearly_expenses = energy_consumption_for_water_heating * energy_price_per_kwh
