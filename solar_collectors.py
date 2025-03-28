@@ -39,6 +39,7 @@ def calculate_monthly_captured_heat_kWh(monthly_sun_energy_kWh_m2: float,
     return captured_heat_kWh
 
 from months_collection import months
+from fuels_and_heating_collection import fuels_and_heating_types
 
 def fetch_data_and_calculate(general_input: GeneralInputData, solar_input: SolarCollectorsUserInput) -> OutputData:
 
@@ -60,22 +61,34 @@ def fetch_data_and_calculate(general_input: GeneralInputData, solar_input: Solar
         total_collector_production = total_collector_production + collector_production
 
 
-    curr_system_efficency_coef: float = -1 # VLOOKUP(B255,B52:J59,9,FALSE)
-    needed_energy: float = 0 # racuna se kao suma po svim mesecima
-    energy_consumption_for_water_heating : float = needed_energy / curr_system_efficency_coef
-    energy_price_per_kwh: float = -1
+    coeffs = fuels_and_heating_types.be_get_coefficents(solar_input.water_heating_source, "етажно грејање")
+    fuel_data = fuels_and_heating_types.be_get_fuel_cyr(solar_input.water_heating_source)
     
-    curr_yearly_expenses = energy_consumption_for_water_heating * energy_price_per_kwh
+    # KOJE KOEFICIJENTE KORISTITI?
+    curr_system_efficency_coef = coeffs.fuel_efficency * coeffs.pipe_system_efficency * coeffs.regulation_efficency
+    #curr_system_efficency_coef = 0.58*0.95*0.92
+    
+    delivered_energy_prev: float = Q_nd / curr_system_efficency_coef
+    delivered_energy_new: float = (Q_nd-total_collector_production) / curr_system_efficency_coef
+    
+    curr_yearly_expenses: float = delivered_energy_prev * fuel_data.consumtion_per_kWh * solar_input.energy_source_price_per_unit
+    new_yearly_expenses: float = delivered_energy_new * fuel_data.consumtion_per_kWh * solar_input.energy_source_price_per_unit
+    
+    yearly_savings: float = curr_yearly_expenses - new_yearly_expenses
+    payback_period: float = solar_input.investment_price / yearly_savings
+    percantage_saved: float = total_collector_production / Q_nd
 
-    return OutputData(NOT_PROVIDED, NOT_PROVIDED, NOT_PROVIDED, NOT_PROVIDED)
+    return OutputData(curr_yearly_expenses, yearly_savings, payback_period, percantage_saved, total_collector_production)
 
 
 def test():
     # Example Usage
+   
     general_input: GeneralInputData = GeneralInputData(municipality_name_lat="Aleksandrovac", heating_type_lat="etažno")
+    
     collector_user_input: SolarCollectorsUserInput = SolarCollectorsUserInput(
         investment_price = 100000,
-        water_heating_source = 'drvo',
+        water_heating_source = 'дрво',
         energy_source_price_per_unit = 8000,
         number_of_people = 5,
         collector_surface_area_m2 = 2,
