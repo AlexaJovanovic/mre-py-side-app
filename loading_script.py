@@ -74,6 +74,8 @@ def load_db_from_google_sheets(sheet_names:list[str], mongo_uri:str, db_name:str
         collection = db[sheet_name]
         if (drop_old_collections):
             collection.drop()
+            print(f"Previous data in '{sheet_name}' collection droped.")
+
         
         if data:  # Make sure there's data to insert
             collection.insert_many(data)
