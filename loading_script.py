@@ -95,7 +95,7 @@ all_sheet_names = [
     'construction_periods',
     'districts',
     'door_u_values',
-    'dwelling types',
+    'dwelling_types',
     'efficiency_coefs',
     'glazing_types',
     'heating_fuels',
