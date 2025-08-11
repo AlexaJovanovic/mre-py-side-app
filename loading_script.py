@@ -4,40 +4,6 @@ import requests
 from io import BytesIO
 import numpy as np
 
-def parse_double_key_signle_val(df: pd.DataFrame):
-    header_cell = str(df.columns[0])
-    
-    keys, val_name = [part.strip() for part in header_cell.split("->", 1)]
-    key1_name, key2_name = [part.strip() for part in keys.split("\\", 1)]
-
-    key1_values = df.iloc[:, 0]
-    key2_values = df.columns[1:]
-    data = []
-
-    for i, key1 in enumerate(key1_values):
-        for key2 in key2_values:
-            val = df.iloc[i, df.columns.get_loc(key2)]
-            if pd.notnull(val):
-                data.append({key1_name: key1, key2_name: key2, val_name: val})
-    
-    return data
-
-
-
-def parse_double_key_multiple_val(df: pd.DataFrame):
-    return
-
-def parse_sheet_with_2_keys(df: pd.DataFrame):
-    header_cell = str(df.columns[0])
-    
-    contains_single_value: bool = False
-    if "->" in header_cell:
-        contains_single_value = True
-
-    if contains_single_value:
-        return parse_double_key_signle_val(df)
-    else:
-        return parse_double_key_multiple_val(df)
 
 def parse_sheet_with_single_key(df: pd.DataFrame) -> list[dict]:
     return df.to_dict(orient='records')
@@ -60,15 +26,7 @@ def load_db_from_google_sheets(sheet_names:list[str], mongo_uri:str, db_name:str
         sheet_df = xls.parse(sheet_name)
         sheet_df = sheet_df.astype(object)
 
-        is_table_with_2_keys: bool = False
-        if "\\" in str(sheet_df.columns[0]):
-            is_table_with_2_keys = True
-        
-        data = None
-        if (is_table_with_2_keys):
-            data = parse_sheet_with_2_keys(sheet_df)
-        else:
-            data = parse_sheet_with_single_key(sheet_df)
+        data = parse_sheet_with_single_key(sheet_df)
 
         # Insert into MongoDB
         collection = db[sheet_name]
@@ -82,7 +40,6 @@ def load_db_from_google_sheets(sheet_names:list[str], mongo_uri:str, db_name:str
             print(f"Inserted {len(data)} documents into '{sheet_name}' collection.")
         else:
             print(f"No data to insert in '{sheet_name}'.")
-
 
     return
 
