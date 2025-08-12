@@ -4,6 +4,7 @@ import requests
 from io import BytesIO
 import numpy as np
 import os
+from dotenv import load_dotenv
 
 def parse_sheet_with_single_key(df: pd.DataFrame) -> list[dict]:
     return df.to_dict(orient='records')
@@ -43,6 +44,7 @@ def load_db_from_google_sheets(sheet_names:list[str], mongo_uri:str, db_name:str
 
     return
 
+load_dotenv()
 
 mongo_uri = os.getenv("MONGO_URI")
 db_name = "EnergyCalculator"
