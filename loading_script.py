@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import requests
 from io import BytesIO
 import numpy as np
-
+import os
 
 def parse_sheet_with_single_key(df: pd.DataFrame) -> list[dict]:
     return df.to_dict(orient='records')
@@ -15,7 +15,7 @@ def load_db_from_google_sheets(sheet_names:list[str], mongo_uri:str, db_name:str
     db = client[db_name]
     
     # Excel export URL (downloads the whole spreadsheet as .xlsx)
-    sheet_id = "1EZzJBHdRWpiYhxwvx7hM9AJnGprLlPj6sEou0YIm7R0"
+    sheet_id = os.getenv("GOOGLE_SHEET_ID")
     export_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=xlsx"
 
     # Request and load as Excel file
@@ -44,7 +44,7 @@ def load_db_from_google_sheets(sheet_names:list[str], mongo_uri:str, db_name:str
     return
 
 
-mongo_uri = "mongodb+srv://admin:admin@energycalculator.e5mcb.mongodb.net/?retryWrites=true&w=majority&appName=EnergyCalculator"
+mongo_uri = os.getenv("MONGO_URI")
 db_name = "EnergyCalculator"
 all_sheet_names = [
     'airtightness_types',
@@ -67,4 +67,6 @@ all_sheet_names = [
     'wind_exposure_types'
 ]
 
-load_db_from_google_sheets(all_sheet_names, mongo_uri, db_name, drop_old_collections=True)
+custom_sheets = []
+
+load_db_from_google_sheets(custom_sheets, mongo_uri, db_name, drop_old_collections=True)
